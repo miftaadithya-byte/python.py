@@ -1,0 +1,50 @@
+import streamlit as st
+
+def hitung_kecepatan(jarak_km, waktu_jam):
+    """Menghitung kecepatan rata-rata (km/jam)."""
+    # Menghindari pembagian dengan nol
+    if waktu_jam == 0:
+        return 0  # Atau bisa diatur untuk menampilkan pesan error di Streamlit
+    kecepatan = jarak_km / waktu_jam
+    return kecepatan
+
+# --- Tampilan Aplikasi Streamlit ---
+
+st.title("🚀 Kalkulator Kecepatan Rata-Rata")
+st.markdown("Aplikasi sederhana untuk menghitung kecepatan rata-rata (km/jam).")
+
+# Input
+# Menggunakan st.number_input untuk input angka
+jarak = st.number_input(
+    "Masukkan jarak yang ditempuh (km):", 
+    min_value=0.0, 
+    value=10.0, 
+    step=1.0, 
+    format="%.2f"
+)
+
+waktu = st.number_input(
+    "Masukkan waktu tempuh (jam):", 
+    min_value=0.0, 
+    value=1.0, 
+    step=0.1, 
+    format="%.2f"
+)
+
+# Tombol untuk memicu perhitungan
+if st.button("Hitung Kecepatan"):
+    if waktu == 0:
+        st.error("Waktu tempuh tidak boleh nol!")
+    else:
+        # Panggil fungsi
+        hasil_kecepatan = hitung_kecepatan(jarak, waktu)
+
+        # Output
+        # Menggunakan st.metric untuk menampilkan hasil dengan visual yang bagus
+        st.metric(
+            label="Kecepatan Rata-Rata Anda", 
+            value=f"{hasil_kecepatan:.2f} km/jam"
+        )
+        
+        # Contoh output sederhana
+        st.balloons() # Efek visual
